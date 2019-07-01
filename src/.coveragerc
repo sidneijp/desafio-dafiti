@@ -1,0 +1,29 @@
+[run]
+branch = True
+source = .
+omit =
+    */__init__.py,
+    *__pycache__/,
+    *manage.py,
+    *settings*.py,
+    */settings/*,
+    *urls.py,
+    */migrations/*,
+    tests/*,
+    test?_*.py,
+    *_test?.py,
+    test?.py
+    *wsgi.py,
+    *conftest.py,
+    *.pyc,
+    */venv*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    if settings.DEBUG
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    __str__
+    __repr__

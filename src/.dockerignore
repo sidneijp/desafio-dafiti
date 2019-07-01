@@ -1,0 +1,14 @@
+**/README.md
+docker-compose.yml
+src/coverage.xml
+src/htmlcov
+src/.coverage
+.idea
+.git
+**/*.swp
+**/*.pyc
+**/__pycache__/
+**/*.log
+**/.tox/
+**/.nox/
+**/.pytest_cache/
