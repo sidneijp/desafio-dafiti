@@ -16,7 +16,7 @@ omit =
     *wsgi.py,
     *conftest.py,
     *.pyc,
-    */venv*
+    *venv*
 
 [report]
 exclude_lines =

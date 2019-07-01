@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/desafio_dafiti/
+    docker:
+      - image: circleci/python:3.7
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Python's virtualenv from Cache
+          key: venv-{{ checksum "./src/Pipfile.lock" }}
+      - run:
+          name: Install Python packages
+          command: |
+            if [ ! -f "./src/.requirements_installed" ]
+            then
+              cd src
+              pipenv clean && pipenv sync --dev
+              touch .requirements_installed
+            else
+              echo "Python packages for the current Pipfile.lock are already installed (restored from cache)"
+            fi
+      - save_cache:
+          name: Save Python's virtualenv to Cache
+          key: venv-{{ checksum "./src/Pipfile.lock" }}
+          paths:
+            - "./src/.venv"
+            - "./src/.requirements_installed"
+      - run:
+          name: Run backend's unit tests
+          command: |
+            cp .env.sample src/.env
+            cd src
+            pipenv run py.test --cov=.
