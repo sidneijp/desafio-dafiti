@@ -1,0 +1,23 @@
+FROM python:3.7-alpine
+LABEL maintainer="Sidnei Pereira <sidi.jp@gmail.com>" \
+      description="Django Application container image meant for development"
+
+RUN pip install pipenv pip setuptools -U
+RUN apk add --no-cache --virtual .build-deps \
+    ca-certificates gcc postgresql-dev linux-headers musl-dev \
+    libffi-dev jpeg-dev zlib-dev
+
+WORKDIR /code
+
+ADD Pipfile.lock /code/
+ADD Pipfile /code/
+
+RUN pipenv sync --dev
+
+ADD . /code/
+
+ENTRYPOINT ["pipenv", "run"]
+
+EXPOSE 8000/tcp
+
+CMD ["python", "/code/manage.py", "runserver", "0.0.0.0:8000"]
