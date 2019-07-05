@@ -1,0 +1,7 @@
+pipelines:
+  default:
+    - step:
+        script:
+          - pipe: sonarsource/sonarcloud-scan:1.0.1
+            variables:
+              SONAR_TOKEN: '${SONAR_TOKEN}'
