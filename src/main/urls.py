@@ -16,9 +16,13 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+import rest_framework.urls
+import apps.core.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api-auth/', include(rest_framework.urls)),
+    path('', include(apps.core.urls)),
 ]
 
 

@@ -65,11 +65,13 @@ BUILTIN_APPS = [
 
 THIRDPARTY_APPS = [
     'rest_framework',
+    'django_filters',
 ]
 
 # Keep local (no vendors) Django apps inside 'apps' package
 LOCAL_APPS = [
     'apps.accounts',
+    'apps.core',
 ]
 
 DEV_APPS = [
@@ -184,3 +186,28 @@ STATIC_ROOT = config('STATIC_ROOT', default=PROJECT_ROOT / 'staticfiles')
 
 MEDIA_URL = config('MEDIA_URL', default='/media/')
 MEDIA_ROOT = config('MEDIA_ROOT', default=PROJECT_ROOT / 'mediafiles')
+
+# Django REST Framework settings
+# http://www.django-rest-framework.org
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+
+# Custom settings for DEBUG=True
+if DEBUG:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] += (
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
+

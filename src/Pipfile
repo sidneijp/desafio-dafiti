@@ -18,6 +18,7 @@ factory-boy = "*"
 python-decouple = "*"
 dj-database-url = "*"
 psycopg2 = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.7"
