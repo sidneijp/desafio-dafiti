@@ -2,7 +2,6 @@ from django.db import IntegrityError, transaction
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.decorators import action
-from rest_framework.generics import CreateAPIView
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Shoe

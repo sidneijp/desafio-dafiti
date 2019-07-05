@@ -7,8 +7,8 @@ ___
 
 ### Dependências
 
-- Docker >=18
-- docker-compose >=1.21
+- Docker >=18 [instalação](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+- docker-compose >=1.21 [instalação](https://docs.docker.com/compose/install/) 
 - gnu make (opcional)
 
 * As receitas do Makefile em sua maioria estão abstraindo simples comandos do docker-compose. Caso não o use o `make`, basta ler o Makefile
@@ -33,12 +33,53 @@ Para executar todo o ambiente localmente,
 
 `$ make up`
 
-### Comandos com o Makefile
-
 Estará disponível:
 - [http://localhost:8000/](http://localhost:8000/) - Home da apicação
 - [http://localhost:8000/admin/](http://localhost:8000/admin/) - Django Admin's Site
 - [http://localhost:8025/](http://localhost:8025/) - Mailhog ("Inbox" para teste de envio/recebimento de email)
+
+Para criar um `superuser` para utilizar a aplicação execute
+
+`$ make dj createsuperuser`
+
+e preencha os dados
+
+Gere alguns dados Fake para experimentar:
+
+`$ make dj generate_fake_data`
+
+Existe apenas um enpoint, [/shoes/](http://localhost:8000/shoes/). Ele pode ser navegada pelo browser nesse endereço:
+
+[http://localhost:8000/shoes/](http://localhost:8000/shoes/)
+
+Caso deseja usar o `curl` para consultar a API pelo terminal, segue um "colinha":
+
+    GET - get/retrive/read a list of resources (paginated)
+    curl -u <username>:<password> -X GET -H "Content-Type: application/json" http://localhost:8000/shoes/
+    
+    GET - get/retrive/read a list of resources (paginated) by search term (search for fields: "name", "color")
+    curl -u <username>:<password> -X GET -H "Content-Type: application/json" http://localhost:8000/shoes/?search=<term>
+    
+    GET - get/retrive/read a list of resources (paginated) with field fieltering (available fields: 'sku', 'name', 'color', 'stock', 'price')
+    curl -u <username>:<password> -X GET -H "Content-Type: application/json" http://localhost:8000/shoes/?<field>=<value>&<another_field>=<value>
+    
+    GET - get/retrive/read a single resource
+    curl -u <username>:<password> -X GET -H "Content-Type: application/json" http://localhost:8000/shoes/<id>/
+    
+    POST - insert/create/add
+    curl -u <username>:<password> -X POST -d '{"name": "Silvio Santos", "sku": "SKU-51", "color": "b", "stock": 100, "price": 102.12}' -H "Content-Type: application/json" http://localhost:8000/shoes/
+    
+    PATCH - partial Update
+    curl -u <username>:<password> -X PATCH -d '{"color": "g"}' -H "Content-Type: application/json" http://localhost:8000/shoes/<id>/
+    
+    PUT - full Update
+    curl -u <username>:<password> -X PUT -d '{"name": "Reginaldo Rossi", "sku": "SKU-52", "color": "r", "stock": 300, "price": 202.12}' -H "Content-Type: application/json" http://localhost:8000/shoes/<id>/
+    
+    DELETE - delete a single resource
+    curl -u <username>:<password> -X DELETE -H "Content-Type: application/json" http://localhost:8000/shoes/<id>/
+
+
+### Comandos com o Makefile
 
 Para visualizar todos os logs da aplicação:
 
