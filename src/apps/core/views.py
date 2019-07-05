@@ -15,12 +15,12 @@ class ShoeViewSet(ModelViewSet):
     filterset_fields = ('sku', 'name', 'color', 'stock', 'price')
     search_fields = ('name', 'color',)
 
-    def get_serializer_class(self):
-        if 'csv_import' in self.request.path:
-            return ShoeCsvSerializer
-        return ShoeSerializer
+    # def get_serializer_class(self):
+    #     if 'csv_import' in self.request.path:
+    #         return ShoeCsvSerializer
+    #     return ShoeSerializer
 
-    @action(methods=['post'], detail=False, url_path='csv_import', url_name='csv-import')
-    @transaction.atomic
-    def import_csv(self, request):
-        pass
+    # @action(methods=['post'], detail=False, url_path='csv_import', url_name='csv-import')
+    # @transaction.atomic
+    # def import_csv(self, request):
+    #     pass
